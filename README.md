@@ -1,12 +1,40 @@
-# SGP-NET: Scene Graph Priority Network untuk Validasi Kursi Prioritas dengan Feedback Auditori
+# SGP-NET: Sistem Pemantauan Kursi Prioritas Berbasis Scene Graph
 
-## Abstrak
-Seiring dengan prediksi peningkatan signifikan pengguna transportasi publik di Jabodetabek pada tahun 2025, efektivitas fasilitas krusial seperti kursi prioritas menjadi tantangan utama. Penyalahgunaan oleh penumpang yang tidak berhak sering terjadi akibat tidak adanya mekanisme validasi yang objektif dan otomatis. Untuk mengatasi masalah ini, penelitian ini mengusulkan dan mengembangkan Scene Graph Priority Network (SGP-NET), sebuah sistem berbasis computer vision untuk validasi kelayakan penumpang secara real-time yang dilengkapi umpan balik multi-modal. Arsitektur SGP-NET mengintegrasikan beberapa model deep learning, yaitu YOLOv8n untuk deteksi penumpang dan alat bantu jalan, MobileNetV2 untuk klasifikasi penggunaan masker, serta arsitektur CNN kustom untuk estimasi usia. Inovasi utama dari sistem ini terletak pada pemanfaatan scene graph yang secara dinamis memetakan seluruh entitas terdeteksi untuk memodelkan dan menganalisis hubungan spasial-kontekstual, yang memungkinkan untuk membuat keputusan cerdas yang melampaui deteksi objek terisolasi. Sistem yang diimplementasikan kemudian diuji menggunakan kombinasi dataset publik dan data primer, menunjukkan kinerja yang sangat andal pada setiap komponen dengan mAP@50 sebesar 87,0% untuk deteksi objek, akurasi klasifikasi usia 89,07%, dan akurasi deteksi masker mencapai 99%. Hasil ini menegaskan bahwa SGP-NET merupakan kerangka kerja yang solid dan berpotensi besar untuk mendukung implementasi aturan kursi prioritas secara objektif. Meskipun demikian, untuk penerapan skala luas, penelitian selanjutnya direkomendasikan untuk mengatasi keterbatasan saat ini, seperti memperkaya dataset dengan citra demografis lokal untuk meningkatkan akurasi estimasi usia, implementasi langsung pada transportasi umum untuk menguji ketahanan sistem pada berbagai kondisi dunia nyata, termasuk variasi pencahayaan dan kepadatan penumpang.
+Sebuah sistem cerdas untuk memantau penggunaan kursi prioritas di transportasi umum secara *real-time* menggunakan *deep learning* dan analisis kontekstual. Proyek ini dirancang untuk mengidentifikasi pelanggaran dan memberikan umpan balik secara otomatis untuk mendorong lingkungan transportasi yang lebih inklusif dan etis.
 
-**Kata Kunci:** SGP-NET, Kursi Prioritas, Computer Vision, Scene Graph, Transportasi Publik, Deep learning.
+-----
 
----
-### Datasets
+## ✨ Fitur Utama
+
+  * **Deteksi Real-time**: Menggunakan **YOLOv8n** untuk mendeteksi individu dan objek relevan (seperti kruk) dengan kecepatan tinggi.
+  * **Analisis Kontekstual dengan Scene Graph**: Inovasi utama yang tidak hanya mendeteksi objek, tetapi juga **memodelkan hubungan spasial dan kontekstual** antar entitas (misalnya, kedekatan seseorang dengan kruk).
+  * **Logika Keputusan Hierarkis**: Menerapkan aturan inferensi cerdas untuk menentukan prioritas berdasarkan urutan: (1) Penggunaan alat bantu, (2) Penggunaan masker, (3) Kategori usia.
+  * **Umpan Balik Multi-modal**: Memberikan respons otomatis berupa **anotasi visual** (kotak berwarna dan teks) dan **umpan balik audio** (pesan suara informatif) secara dinamis.
+  * **Manajemen Pelacakan**: Memberikan **ID pelacakan unik** pada setiap individu untuk memastikan konsistensi analisis di setiap *frame*.
+
+-----
+
+## ⚙️ Cara Kerja Sistem
+
+SGP-NET dirancang sebagai sistem pemantauan kursi prioritas *end-to-end* yang memproses *feed* kamera secara *real-time*. Prosesnya dimulai dengan deteksi individu menggunakan model **YOLO**, yang kemudian memberikan ID pelacakan unik. Inovasi utama sistem ini terletak pada tahap ekstraksi atribut (usia, masker, kruk) yang kemudian dimodelkan secara relasional menggunakan **Scene Graph dinamis**. Mekanisme ini memungkinkan analisis berbasis **konteks dan interaksi antar entitas**, bukan sekadar deteksi terisolasi.
+
+Berdasarkan pemahaman kontekstual dari Scene Graph tersebut, keputusan prioritas diambil secara **hierarkis** dan memicu **umpan balik multi-modal** yang adaptif, berupa anotasi visual dan pesan suara, yang dilengkapi mekanisme *cooldown* untuk menghindari repetisi.
+
+-----
+
+## 🛠️ Teknologi yang Digunakan
+
+  * **Bahasa**: Python
+  * **Framework Deep Learning**: PyTorch, TensorFlow/Keras
+  * **Model Inti**:
+      * **Deteksi Objek**: `ultralytics` (YOLOv8n)
+      * **Klasifikasi**: `MobileNetV2` (via TensorFlow/Keras), CNN Kustom (via PyTorch)
+  * **Manipulasi Citra**: OpenCV, Pillow
+  * **Analisis Data**: NumPy, Pandas
+  * **Audio**: gTTS, playsound
+  * **Visualisasi**: Matplotlib, Seaborn
+
+## Datasets
 1. Penumpang dengan Kruk: https://universe.roboflow.com/kelvin-slsxl/crutches-rg3he
 2. Usia: https://www.kaggle.com/datasets/frabbisw/facial-age
 3. Masker: https://www.kaggle.com/datasets/omkargurav/face-mask-dataset
