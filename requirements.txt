@@ -1,0 +1,23 @@
+# Machine Learning & Deep Learning Frameworks
+torch
+torchvision
+tensorflow
+ultralytics
+transformers
+scikit-learn
+
+# Data Handling & Scientific Computing
+pandas
+numpy
+
+# Image Processing
+Pillow
+opencv-python
+
+# Data Visualization
+matplotlib
+seaborn
+
+# Audio Modules
+gTTS
+playsound
